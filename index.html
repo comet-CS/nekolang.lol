@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NekoLang Documentation</title>
+<style>
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1e1e1e;
+        color: #ddd;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #333;
+        padding: 20px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        color: #ff79c6;
+    }
+    nav {
+        background-color: #222;
+        padding: 10px 20px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    nav a {
+        color: #ddd;
+        text-decoration: none;
+    }
+    nav a:hover {
+        color: #ff79c6;
+    }
+    main {
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+    section {
+        margin-bottom: 40px;
+    }
+    h2 {
+        color: #ff79c6;
+    }
+    pre {
+        background-color: #2e2e2e;
+        padding: 10px;
+        overflow-x: auto;
+        border-left: 4px solid #ff79c6;
+    }
+    code {
+        color: #50fa7b;
+    }
+    ul {
+        margin-top: 0;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>NekoLang Documentation</h1>
+</header>
+<nav>
+    <a href="#running">Running</a>
+    <a href="#syntax">Syntax</a>
+    <a href="#ui">UI</a>
+    <a href="#network">Network</a>
+    <a href="#files">File Ops</a>
+    <a href="#modules">Modules</a>
+    <a href="#examples">Examples</a>
+</nav>
+<main>
+    <section id="running">
+        <h2>1. Running NekoLang</h2>
+        <pre><code>python nekolang_interpreter.py &lt;file.neko&gt;</code></pre>
+        <p>Make sure Python 3 and <code>requests</code> library are installed.</p>
+    </section>
+
+    <section id="syntax">
+        <h2>2. Language Syntax</h2>
+        <h3>Variables</h3>
+        <pre><code>let x = 10;
+let name = "Neko";</code></pre>
+
+        <h3>Printing</h3>
+        <pre><code>print x;
+print "Hello, " + name;</code></pre>
+
+        <h3>Functions</h3>
+        <pre><code>fn greet(person) {
+    print "Hello, " + person;
+}
+greet("Alice");</code></pre>
+
+        <h3>Conditionals</h3>
+        <pre><code>if x &gt; 5 {
+    print "x is big";
+} else {
+    print "x is small";
+}</code></pre>
+
+        <h3>Loops</h3>
+        <pre><code>while x &gt; 0 {
+    print x;
+    x = x - 1;
+}</code></pre>
+    </section>
+
+    <section id="ui">
+        <h2>3. UI Functions</h2>
+        <p>All UI functions are under the <code>ui</code> namespace.</p>
+
+        <h3>Window</h3>
+        <pre><code>ui.window("My Window", 600, 400, "#222222");</code></pre>
+
+        <h3>Label</h3>
+        <pre><code>ui.label("Hello", color="white", bg="#333333", clicked=callbackFunction);</code></pre>
+
+        <h3>Button</h3>
+        <pre><code>ui.button("Click Me", color="white", bg="#444444", clicked=callbackFunction);</code></pre>
+
+        <h3>Input</h3>
+        <pre><code>let inputField = ui.input("Type here...", color="black", bg="white");</code></pre>
+
+        <h3>Show</h3>
+        <pre><code>ui.show();</code></pre>
+    </section>
+
+    <section id="network">
+        <h2>4. Network Requests</h2>
+
+        <h3>GET Request</h3>
+        <pre><code>let response = net.get("https://example.com");
+print response.status;
+print response.text;</code></pre>
+
+        <h3>POST Request</h3>
+        <pre><code>let response = net.post("https://example.com", "data=hello");
+print response.status;
+print response.text;</code></pre>
+    </section>
+
+    <section id="files">
+        <h2>5. File Operations</h2>
+        <pre><code>let content = file.read("test.txt");
+file.write("output.txt", "Hello, world!");</code></pre>
+    </section>
+
+    <section id="modules">
+        <h2>6. Built-in Modules</h2>
+        <ul>
+            <li><code>math</code> → standard math functions</li>
+            <li><code>neko.secret()</code> → launches Snake game</li>
+            <li><code>neko.magic_8ball()</code> → Magic 8-Ball easter egg</li>
+        </ul>
+    </section>
+
+    <section id="examples">
+        <h2>7. Examples</h2>
+        <h3>UI + Network</h3>
+        <pre><code>ui.window("Example", 400, 300)
+let btn = ui.button("Fetch Data", clicked=function() {
+    let res = net.get("https://example.com");
+    print res.status;
+})
+ui.show();</code></pre>
+
+        <h3>Magic 8-Ball</h3>
+        <pre><code>neko.magic_8ball();</code></pre>
+    </section>
+</main>
+</body>
+</html>
