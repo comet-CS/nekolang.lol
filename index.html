@@ -3,175 +3,442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NekoLang Documentation</title>
+<title>NekoLang • Build Delightful Desktop Apps</title>
 <style>
+    :root {
+        --bg: #0b0b12;
+        --surface: rgba(17, 17, 27, 0.85);
+        --surface-strong: rgba(24, 24, 37, 0.95);
+        --accent: #ff79c6;
+        --accent-soft: rgba(255, 121, 198, 0.15);
+        --accent-strong: #f1a7e2;
+        --text: #e9e9f4;
+        --muted: #a5a5c2;
+        --code-bg: rgba(32, 32, 45, 0.95);
+        --shadow: 0 18px 60px rgba(10, 10, 20, 0.55);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
     body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #1e1e1e;
-        color: #ddd;
         margin: 0;
-        padding: 0;
+        font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 121, 198, 0.08), transparent 35%),
+                    radial-gradient(circle at 80% 0%, rgba(155, 126, 255, 0.12), transparent 45%),
+                    var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        min-height: 100vh;
     }
+
     header {
-        background-color: #333;
-        padding: 20px;
-        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(16px);
+        background: rgba(11, 11, 18, 0.85);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-    header h1 {
-        margin: 0;
-        color: #ff79c6;
-    }
-    nav {
-        background-color: #222;
-        padding: 10px 20px;
+
+    .nav-container {
         display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 18px clamp(16px, 4vw, 32px);
     }
-    nav a {
-        color: #ddd;
+
+    .brand {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-size: 1.05rem;
+        color: var(--text);
         text-decoration: none;
     }
-    nav a:hover {
-        color: #ff79c6;
+
+    nav {
+        display: flex;
+        gap: clamp(14px, 4vw, 32px);
+        align-items: center;
     }
-    main {
-        padding: 20px;
-        max-width: 900px;
-        margin: auto;
+
+    nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s ease, transform 0.2s ease;
     }
-    section {
-        margin-bottom: 40px;
+
+    nav a:hover,
+    nav a:focus {
+        color: var(--accent);
+        transform: translateY(-1px);
     }
-    h2 {
-        color: #ff79c6;
+
+    .hero {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: clamp(48px, 8vw, 120px) clamp(16px, 6vw, 48px) 48px;
+        display: grid;
+        gap: 36px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: center;
     }
-    pre {
-        background-color: #2e2e2e;
-        padding: 10px;
-        overflow-x: auto;
-        border-left: 4px solid #ff79c6;
+
+    .hero-copy h1 {
+        font-size: clamp(2.6rem, 4vw, 3.8rem);
+        margin-bottom: 16px;
+        line-height: 1.05;
     }
-    code {
-        color: #50fa7b;
+
+    .hero-copy p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        max-width: 32ch;
     }
-    ul {
+
+    .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .cta-button {
+        padding: 14px 26px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.3s ease;
+    }
+
+    .cta-primary {
+        background: linear-gradient(135deg, var(--accent), #bd93f9);
+        color: #0b0b12;
+        box-shadow: 0 18px 40px rgba(189, 147, 249, 0.35);
+    }
+
+    .cta-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 45px rgba(189, 147, 249, 0.45);
+    }
+
+    .cta-secondary {
+        border-color: rgba(255, 255, 255, 0.15);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .cta-secondary:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .hero-card {
+        background: var(--surface);
+        border-radius: 28px;
+        padding: clamp(24px, 5vw, 36px);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-card h2 {
+        color: var(--accent-strong);
         margin-top: 0;
+    }
+
+    .hero-card pre {
+        margin: 0;
+        background: var(--code-bg);
+        border-radius: 16px;
+        padding: 16px;
+        overflow-x: auto;
+    }
+
+    main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 clamp(16px, 6vw, 48px) 120px;
+    }
+
+    section {
+        margin-top: clamp(48px, 10vw, 120px);
+    }
+
+    h2.section-title {
+        font-size: clamp(1.9rem, 3vw, 2.4rem);
+        margin-bottom: 24px;
+    }
+
+    .features-grid {
+        display: grid;
+        gap: 28px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .feature-card {
+        background: var(--surface-strong);
+        padding: 24px;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, transparent 10%, rgba(255, 121, 198, 0.08));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover::after {
+        opacity: 1;
+    }
+
+    .feature-title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .feature-desc {
+        color: var(--muted);
+    }
+
+    .docs-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .docs-card {
+        background: var(--surface);
+        border-radius: 22px;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        box-shadow: var(--shadow);
+    }
+
+    .docs-card h3 {
+        margin: 0;
+        color: var(--accent-strong);
+    }
+
+    pre {
+        background: var(--code-bg);
+        border-radius: 16px;
+        padding: 16px;
+        overflow-x: auto;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    code {
+        color: #8be9fd;
+        font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95rem;
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 20px;
+        color: var(--muted);
+    }
+
+    .divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+        margin: clamp(48px, 10vw, 96px) 0;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 32px 16px 48px;
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    .footer a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+        nav {
+            display: none;
+        }
+
+        header {
+            position: static;
+        }
     }
 </style>
 </head>
 <body>
 <header>
-    <h1>NekoLang Documentation</h1>
+    <div class="nav-container">
+        <a class="brand" href="#home">NekoLang</a>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#docs">Docs</a>
+            <a href="#community">Community</a>
+        </nav>
+    </div>
 </header>
-<nav>
-    <a href="#running">Running</a>
-    <a href="#syntax">Syntax</a>
-    <a href="#ui">UI</a>
-    <a href="#network">Network</a>
-    <a href="#files">File Ops</a>
-    <a href="#modules">Modules</a>
-    <a href="#examples">Examples</a>
-</nav>
+
 <main>
-    <section id="running">
-        <h2>1. Running NekoLang</h2>
-        <pre><code>python nekolang_interpreter.py &lt;file.neko&gt;</code></pre>
-        <p>Make sure Python 3 and <code>requests</code> library are installed.</p>
+    <section class="hero" id="home">
+        <div class="hero-copy">
+            <h1>Build delightful desktop and network apps in pure NekoLang.</h1>
+            <p>Designed for creators who want Python-powered productivity with a charming syntax and playful standard library. From UIs to network automation, NekoLang keeps it elegant.</p>
+            <div class="hero-cta">
+                <a class="cta-button cta-primary" href="#docs">Read the Docs</a>
+                <a class="cta-button cta-secondary" href="#examples">See Examples</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <h2>Getting started is a single command</h2>
+            <pre><code>python nekolang_interpreter.py hello.neko</code></pre>
+            <p class="feature-desc">The interpreter ships with batteries included—just install Python 3 and <code>requests</code>.</p>
+        </div>
     </section>
 
-    <section id="syntax">
-        <h2>2. Language Syntax</h2>
-        <h3>Variables</h3>
-        <pre><code>let x = 10;
+    <section id="features">
+        <h2 class="section-title">Why developers purr for NekoLang</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">Playful, expressive syntax</h3>
+                <p class="feature-desc">Blend functional and scripting paradigms with <code>let</code>, tidy control flow, and first-class functions.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">First-class UI toolkit</h3>
+                <p class="feature-desc">Craft windows, buttons, and inputs using the <code>ui</code> namespace without leaving your script.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Network-native</h3>
+                <p class="feature-desc">Call REST APIs in one line and handle responses with expressive destructuring.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Secret easter eggs</h3>
+                <p class="feature-desc">Delight users with built-in fun like <code>neko.magic_8ball()</code> and hidden arcade games.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="docs">
+        <h2 class="section-title">Quickstart Documentation</h2>
+        <div class="docs-grid">
+            <article class="docs-card" id="running">
+                <h3>Running NekoLang</h3>
+                <pre><code>python nekolang_interpreter.py &lt;file.neko&gt;</code></pre>
+                <p class="feature-desc">Ensure Python 3 and the <code>requests</code> library are installed before running your first script.</p>
+            </article>
+
+            <article class="docs-card" id="syntax">
+                <h3>Language Syntax</h3>
+                <h4>Variables</h4>
+                <pre><code>let x = 10;
 let name = "Neko";</code></pre>
-
-        <h3>Printing</h3>
-        <pre><code>print x;
+                <h4>Printing</h4>
+                <pre><code>print x;
 print "Hello, " + name;</code></pre>
-
-        <h3>Functions</h3>
-        <pre><code>fn greet(person) {
+                <h4>Functions</h4>
+                <pre><code>fn greet(person) {
     print "Hello, " + person;
 }
 greet("Alice");</code></pre>
+            </article>
 
-        <h3>Conditionals</h3>
-        <pre><code>if x &gt; 5 {
+            <article class="docs-card" id="control">
+                <h3>Control Flow</h3>
+                <h4>Conditionals</h4>
+                <pre><code>if x &gt; 5 {
     print "x is big";
 } else {
     print "x is small";
 }</code></pre>
-
-        <h3>Loops</h3>
-        <pre><code>while x &gt; 0 {
+                <h4>Loops</h4>
+                <pre><code>while x &gt; 0 {
     print x;
     x = x - 1;
 }</code></pre>
-    </section>
+            </article>
 
-    <section id="ui">
-        <h2>3. UI Functions</h2>
-        <p>All UI functions are under the <code>ui</code> namespace.</p>
+            <article class="docs-card" id="ui">
+                <h3>UI Toolkit</h3>
+                <p>All UI functions live inside the <code>ui</code> namespace.</p>
+                <pre><code>ui.window("My Window", 600, 400, "#222222");
+ui.label("Hello", color="white", bg="#333333", clicked=callback);
+ui.button("Click Me", color="white", bg="#444444", clicked=callback);
+let inputField = ui.input("Type here...", color="black", bg="white");
+ui.show();</code></pre>
+            </article>
 
-        <h3>Window</h3>
-        <pre><code>ui.window("My Window", 600, 400, "#222222");</code></pre>
-
-        <h3>Label</h3>
-        <pre><code>ui.label("Hello", color="white", bg="#333333", clicked=callbackFunction);</code></pre>
-
-        <h3>Button</h3>
-        <pre><code>ui.button("Click Me", color="white", bg="#444444", clicked=callbackFunction);</code></pre>
-
-        <h3>Input</h3>
-        <pre><code>let inputField = ui.input("Type here...", color="black", bg="white");</code></pre>
-
-        <h3>Show</h3>
-        <pre><code>ui.show();</code></pre>
-    </section>
-
-    <section id="network">
-        <h2>4. Network Requests</h2>
-
-        <h3>GET Request</h3>
-        <pre><code>let response = net.get("https://example.com");
+            <article class="docs-card" id="network">
+                <h3>Network Requests</h3>
+                <h4>GET</h4>
+                <pre><code>let response = net.get("https://example.com");
 print response.status;
 print response.text;</code></pre>
-
-        <h3>POST Request</h3>
-        <pre><code>let response = net.post("https://example.com", "data=hello");
+                <h4>POST</h4>
+                <pre><code>let response = net.post("https://example.com", "data=hello");
 print response.status;
 print response.text;</code></pre>
-    </section>
+            </article>
 
-    <section id="files">
-        <h2>5. File Operations</h2>
-        <pre><code>let content = file.read("test.txt");
+            <article class="docs-card" id="files">
+                <h3>File Operations</h3>
+                <pre><code>let content = file.read("test.txt");
 file.write("output.txt", "Hello, world!");</code></pre>
-    </section>
+            </article>
 
-    <section id="modules">
-        <h2>6. Built-in Modules</h2>
-        <ul>
-            <li><code>math</code> → standard math functions</li>
-            <li><code>neko.secret()</code> → launches Snake game</li>
-            <li><code>neko.magic_8ball()</code> → Magic 8-Ball easter egg</li>
-        </ul>
-    </section>
+            <article class="docs-card" id="modules">
+                <h3>Built-in Modules</h3>
+                <ul>
+                    <li><code>math</code> → standard math functions</li>
+                    <li><code>neko.secret()</code> → launches Snake game</li>
+                    <li><code>neko.magic_8ball()</code> → Magic 8-Ball easter egg</li>
+                </ul>
+            </article>
 
-    <section id="examples">
-        <h2>7. Examples</h2>
-        <h3>UI + Network</h3>
-        <pre><code>ui.window("Example", 400, 300)
+            <article class="docs-card" id="examples">
+                <h3>Examples</h3>
+                <h4>UI + Network</h4>
+                <pre><code>ui.window("Example", 400, 300)
 let btn = ui.button("Fetch Data", clicked=function() {
     let res = net.get("https://example.com");
     print res.status;
 })
 ui.show();</code></pre>
+                <h4>Magic 8-Ball</h4>
+                <pre><code>neko.magic_8ball();</code></pre>
+            </article>
+        </div>
+    </section>
 
-        <h3>Magic 8-Ball</h3>
-        <pre><code>neko.magic_8ball();</code></pre>
+    <div class="divider"></div>
+
+    <section id="community">
+        <h2 class="section-title">Join the community</h2>
+        <p class="feature-desc">Share scripts, request features, and show off your creations in the community Discord. Got feedback? We’re all ears—and whiskers.</p>
     </section>
 </main>
+
+<footer class="footer">
+    Built with ❤️ by the NekoLang maintainers. <a href="#docs">Jump back to docs.</a>
+</footer>
 </body>
 </html>
